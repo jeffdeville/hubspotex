@@ -21,6 +21,27 @@ defmodule Hubspot.Contacts do
   end
 
   @doc """
+  Returns a struct that is used in `Hubspot.Client` for
+  getting all contacts in a given list.
+
+  ## Examples
+      iex> Hubspot.Contacts.in_list(1)
+      %Hubspot.HTTP.Request{endpoint: "/contacts/v1/lists/1/contacts/all",
+        method: :get, query: [], body: ""}
+
+      iex> Hubspot.Contacts.in_list(1, [count: 10, vidOffset: 100])
+      %Hubspot.HTTP.Request{endpoint: "/contacts/v1/lists/1/contacts/all",
+        method: :get, query: ["count": 10, "vidOffset": 100], body: ""}
+  """
+  @spec in_list(integer, list) :: %Hubspot.HTTP.Request{}
+  def in_list(list_id, params \\ []) do
+    %Hubspot.HTTP.Request{
+      endpoint: "/contacts/v1/lists/#{list_id}/contacts/all",
+      method: :get,
+      query: params}
+  end
+
+  @doc """
   Get a contact matching the email.
 
   ## Example
